@@ -49,5 +49,5 @@ java \
 dashbuilder-runtime-8.0.0-alpha.jar
 ```
 
-Once the datasource setup is ready, just import the file [jBPM Dashboards](https://github.com/jesuino/dashbuilder-dashboards/blob/main/jBPM%20DB%20Dashboards/rhpam_default_reports.zip) on your installation using [Content Transfer](https://access.redhat.com/documentation/en-us/red_hat_process_automation_manager/7.5/html/configuring_business_central_settings_and_properties/exporting-importing-dashbuilder-data-proc-configuring-central) or importing into [DashBuilder](https://blog.kie.org/2020/09/introducing-dashbuilder-runtime.html).
+Once the datasource setup is ready, just import the [jBPM Dashboard](https://github.com/jesuino/dashbuilder-dashboards/blob/main/jBPM%20DB%20Dashboard/jbpm_reports.zip) zip file on your installation using [Content Transfer](https://access.redhat.com/documentation/en-us/red_hat_process_automation_manager/7.5/html/configuring_business_central_settings_and_properties/exporting-importing-dashbuilder-data-proc-configuring-central) or importing into [DashBuilder](https://blog.kie.org/2020/09/introducing-dashbuilder-runtime.html).
 
