@@ -40,13 +40,13 @@ Notice that you can either import the dashboards to edit it on Business Central 
 
 ```
 java \
--Ddashbuilder.datasources=jbpdb \
--Ddashbuilder.datasource.sample.jdbcUrl=jdbc:mariadb://localhost:3306/jbpmdb \
--Ddashbuilder.datasource.sample.providerClassName=org.mariadb.jdbc.Driver \
--Ddashbuilder.datasource.sample.maxSize=10 \
--Ddashbuilder.datasource.sample.principal=jbpm \
--Ddashbuilder.datasource.sample.credential=jbpm \
-dashbuilder-runtime-8.0.0-alpha.jar
+-Ddashbuilder.datasources=jbpmdb \
+-Ddashbuilder.datasource.jbpmdb.jdbcUrl=jdbc:mariadb://localhost:3306/jbpmdb \
+-Ddashbuilder.datasource.jbpmdb.providerClassName=org.mariadb.jdbc.Driver \
+-Ddashbuilder.datasource.jbpmdb.maxSize=10 \
+-Ddashbuilder.datasource.jbpmdb.principal=jbpm \
+-Ddashbuilder.datasource.jbpmdb.credential=jbpm \
+-jar dashbuilder-runtime-app-8.0.0-alpha.jar
 ```
 
 Once the datasource setup is ready, just import the [jBPM Dashboard](https://github.com/jesuino/dashbuilder-dashboards/blob/main/jBPM%20DB%20Dashboard/jbpm_reports.zip) zip file on your installation using [Content Transfer](https://access.redhat.com/documentation/en-us/red_hat_process_automation_manager/7.5/html/configuring_business_central_settings_and_properties/exporting-importing-dashbuilder-data-proc-configuring-central) or importing into [DashBuilder](https://blog.kie.org/2020/09/introducing-dashbuilder-runtime.html).
