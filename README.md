@@ -19,6 +19,7 @@ Bear in mind that other configuration (e.g. database, remote server) may be requ
 Planned dashboards:
 
 1) Standard Business Central dashboards
-2) Generic Heatmap
-3) Self contained dashboards with pop culture and other popular themes
+2) Dashboards consuming Prometheus metrics from Kie Server/Kogito
+3) Generic Heatmap
+4) Self contained dashboards with pop culture and other popular themes
 5) Sample Dashboards for all supported datasets types
