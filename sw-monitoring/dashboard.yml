@@ -176,7 +176,7 @@ layoutTemplates:
                   HTML_CODE: Serverless Workflow Monitoring <hr />
                   font-size: xx-large
       - layoutColumns:
-          - span: "3"
+          - span: '3'
             layoutComponents:
               - type: HTML
                 properties:
@@ -185,15 +185,15 @@ layoutTemplates:
               - settings:
                   type: BARCHART
                   refresh:
-                    interval: "3"
+                    interval: '30'
                   columns:
                     - id: Total
-                      pattern: "#"
+                      pattern: '#'
                   chart:
-                    width: "300"
-                    height: "200"
+                    width: '300'
+                    height: '200'
                     margin:
-                      left: "20"
+                      left: '20'
 
                   dataSetLookup:
                     dataSetUuid: started_workflows
@@ -204,7 +204,7 @@ layoutTemplates:
                           - source: Workflow Name
                           - source: Total
                             function: MAX
-          - span: "3"
+          - span: '3'
             layoutComponents:
               - type: HTML
                 properties:
@@ -213,15 +213,15 @@ layoutTemplates:
               - settings:
                   type: BARCHART
                   refresh:
-                    interval: "3"
+                    interval: '30'
                   columns:
                     - id: Total
-                      pattern: "#"
+                      pattern: '#'
                   chart:
-                    width: "300"
-                    height: "200"
+                    width: '300'
+                    height: '200'
                     margin:
-                      left: "20"
+                      left: '20'
                   dataSetLookup:
                     dataSetUuid: completed_workflows
                     groupOps:
@@ -231,7 +231,7 @@ layoutTemplates:
                           - source: Workflow Name
                           - source: Total
                             function: MAX
-          - span: "3"
+          - span: '3'
             layoutComponents:
               - type: HTML
                 properties:
@@ -240,15 +240,15 @@ layoutTemplates:
               - settings:
                   type: BARCHART
                   refresh:
-                    interval: "3"
+                    interval: '30'
                   columns:
                     - id: Duration
-                      pattern: "#0.000"
+                      pattern: '#0.000'
                   chart:
-                    width: "300"
-                    height: "200"
+                    width: '300'
+                    height: '200'
                     margin:
-                      left: "20"
+                      left: '20'
                   dataSetLookup:
                     dataSetUuid: workflow_duration
                     groupOps:
@@ -265,19 +265,19 @@ layoutTemplates:
                   HTML_CODE: <br /> Activity <hr />
                   font-size: x-large
       - layoutColumns:
-          - span: "4"
+          - span: '4'
             layoutComponents:
               - settings:
                   type: EXTERNAL_COMPONENT
                   external_component_id: timeseries
                   timeseries:
                     title:
-                      text: "Started"
+                      text: 'Started'
                   external:
                     external_component_width: 700px
                     external_component_height: 300px
                   refresh:
-                    interval: "2"
+                    interval: '30'
                   dataSetLookup:
                     dataSetUuid: started_workflows
                     groupOps:
@@ -285,19 +285,19 @@ layoutTemplates:
                           - source: Workflow Name
                           - source: Time
                           - source: Total
-          - span: "4"
+          - span: '4'
             layoutComponents:
               - settings:
                   type: EXTERNAL_COMPONENT
                   external_component_id: timeseries
                   timeseries:
                     title:
-                      text: "Completed"
+                      text: 'Completed'
                   external:
                     external_component_width: 700px
                     external_component_height: 300px
                   refresh:
-                    interval: "2"
+                    interval: '30'
                   dataSetLookup:
                     dataSetUuid: completed_workflows
                     groupOps:
