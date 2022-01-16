@@ -1,0 +1,307 @@
+datasets:
+  - uuid: jvm_used_memory
+    expression: '$reduce($map($.data.result, function($v) {$map($v.values, function($r, $i) {[$v.metric.instance, $v.metric.id, $r[0] * 1000, $r[1]]})}), $append)'
+    url: https://prometheus-dashbuilder.kie-tooling-0ad6762cc85bcef5745bb684498c2436-0000.us-south.containers.appdomain.cloud/api/v1/query?query=jvm_memory_used_bytes[1h:30s]
+  - uuid: threads
+    expression: '$reduce($map($.data.result, function($v) {$map($v.values, function($r, $i) {[$v.metric.instance, $v.metric.state, $r[0] * 1000, $r[1]]})}), $append)'
+    url: https://prometheus-dashbuilder.kie-tooling-0ad6762cc85bcef5745bb684498c2436-0000.us-south.containers.appdomain.cloud/api/v1/query?query=jvm_threads_states_threads[10m:1s]
+  - uuid: live_threads
+    expression: '$.data.result.[metric.instance, value[1]]'
+    url: https://prometheus-dashbuilder.kie-tooling-0ad6762cc85bcef5745bb684498c2436-0000.us-south.containers.appdomain.cloud/api/v1/query?query=jvm_threads_live_threads
+  - uuid: daemon_threads
+    expression: '$.data.result.[metric.instance, value[1]]'
+    url: https://prometheus-dashbuilder.kie-tooling-0ad6762cc85bcef5745bb684498c2436-0000.us-south.containers.appdomain.cloud/api/v1/query?query=jvm_threads_daemon_threads
+  - uuid: peak_threads
+    expression: '$.data.result.[metric.instance, value[1]]'
+    url: https://prometheus-dashbuilder.kie-tooling-0ad6762cc85bcef5745bb684498c2436-0000.us-south.containers.appdomain.cloud/api/v1/query?query=jvm_threads_peak_threads
+  - uuid: workflow_duration
+    expression: '$.data.result.[metric.process_id, value[1]]'
+    url: https://prometheus-dashbuilder.kie-tooling-0ad6762cc85bcef5745bb684498c2436-0000.us-south.containers.appdomain.cloud/api/v1/query?query=kogito_process_instance_duration_seconds_sum
+    columns:
+        - id: Workflow Name
+          type: LABEL
+        - id: Duration
+          type: Number
+  - uuid: started_workflows
+    expression: '$reduce($map($.data.result, function($v) {$map($v.values, function($r, $i) {[$v.metric.process_id, $r[0] * 1000, $r[1]]})}), $append)'
+    url: https://prometheus-dashbuilder.kie-tooling-0ad6762cc85bcef5745bb684498c2436-0000.us-south.containers.appdomain.cloud/api/v1/query?query=kogito_process_instance_started_total[10m:1s]
+    columns:
+        - id: Workflow Name
+          type: LABEL
+        - id: Time
+          type: NUMBER
+        - id: Total
+          type: NUMBER          
+  - uuid: completed_workflows
+    expression: '$reduce($map($.data.result, function($v) {$map($v.values, function($r, $i) {[$v.metric.process_id, $r[0] * 1000, $r[1]]})}), $append)'
+    url: https://prometheus-dashbuilder.kie-tooling-0ad6762cc85bcef5745bb684498c2436-0000.us-south.containers.appdomain.cloud/api/v1/query?query=kogito_process_instance_completed_total[10m:1s]
+    columns:
+        - id: Workflow Name
+          type: LABEL
+        - id: Time
+          type: NUMBER
+        - id: Total
+          type: NUMBER    
+layoutTemplates:
+  - name: JVM Memory Usage
+    rows:
+      - layoutColumns:
+          - layoutComponents:
+              - type: HTML
+                properties:
+                    HTML_CODE: <br /> <strong>JVM Memory Usage</strong><hr />
+                    font-size: large
+          - layoutComponents:
+              - settings:
+                  type: EXTERNAL_COMPONENT
+                  external_component_id: timeseries
+                  timeseries:
+                    legend:
+                        bottom: '5%'
+                  external:
+                    external_component_width: 1500px
+                    external_component_height: 400px
+                  refresh:
+                    interval: '30'
+                  dataSetLookup:
+                    dataSetUuid: jvm_used_memory
+                    groupOps:
+                        - groupFunctions:
+                          - source: Column 1
+                          - source: Column 2
+                          - source: Column 3
+  - name: Threads
+    rows:
+      - layoutColumns:
+          - span: '2'
+            layoutComponents:
+                - type: HTML
+                  properties:
+                    HTML_CODE: Threads <hr />
+                    font-size: xx-large
+      - layoutColumns:
+          - span: '2'
+            layoutComponents:
+              - settings:
+                  type: METRIC
+                  general:
+                    title: Live
+                    visible: 'true'
+                  chart:
+                    width: '150'
+                    height: '90'
+                  refresh:
+                    interval: '30'
+                  columns:
+                    - id: Column 1
+                      pattern: '#'
+                  dataSetLookup:
+                    dataSetUuid: live_threads
+                    groupOps:
+                        - groupFunctions:
+                          - source: Column 1
+          - span: '2'
+            layoutComponents:
+              - settings:
+                  type: METRIC
+                  general:
+                    title: Daemon
+                    visible: 'true'
+                  chart:
+                    width: '150'
+                    height: '90'
+                  columns:
+                    - id: Column 1
+                      pattern: '#'                    
+                  refresh:
+                    interval: '5'
+                  dataSetLookup:
+                    dataSetUuid: daemon_threads
+                    groupOps:
+                        - groupFunctions:
+                          - source: Column 1
+          - span: '2'
+            layoutComponents:                          
+              - settings:
+                  type: METRIC
+                  general:
+                    title: Peak
+                    visible: 'true'
+                  chart:
+                    width: '150'
+                    height: '90'
+                  columns:
+                    - id: Column 1
+                      pattern: '#'                    
+                  refresh:
+                    interval: '30'
+                  dataSetLookup:
+                    dataSetUuid: peak_threads
+                    groupOps:
+                        - groupFunctions:
+                          - source: Column 1       
+      - layoutColumns:
+          - layoutComponents:
+              - type: HTML
+                properties:
+                    HTML_CODE: <br /> <strong>Thread States</strong><hr />
+                    font-size: large
+          - layoutComponents:
+              - settings:
+                  type: EXTERNAL_COMPONENT
+                  external_component_id: timeseries
+                  timeseries:
+                    legend:
+                        bottom: '5%'
+                  external:
+                    external_component_width: 1200px
+                    external_component_height: 400px
+                  refresh:
+                    interval: '30'
+                  dataSetLookup:
+                    dataSetUuid: threads
+                    groupOps:
+                        - groupFunctions:
+                          - source: Column 1
+                          - source: Column 2
+                          - source: Column 3                          
+  - name: Serverless Workflows
+    properties:
+      margin-left: 10px
+    rows:
+      - layoutColumns:
+          - layoutComponents:
+              - type: HTML
+                properties:
+                  HTML_CODE: Serverless Workflow Monitoring <hr />
+                  font-size: xx-large
+      - layoutColumns:
+          - span: "3"
+            layoutComponents:
+              - type: HTML
+                properties:
+                  HTML_CODE: <strong>Started</strong><hr />
+                  font-size: medium
+              - settings:
+                  type: BARCHART
+                  refresh:
+                    interval: "3"
+                  columns:
+                    - id: Total
+                      pattern: "#"
+                  chart:
+                    width: "300"
+                    height: "200"
+                    margin:
+                      left: "20"
+
+                  dataSetLookup:
+                    dataSetUuid: started_workflows
+                    groupOps:
+                      - columnGroup:
+                          source: Workflow Name
+                        groupFunctions:
+                          - source: Workflow Name
+                          - source: Total
+                            function: MAX
+          - span: "3"
+            layoutComponents:
+              - type: HTML
+                properties:
+                  HTML_CODE: <strong>Completed</strong><hr />
+                  font-size: medium
+              - settings:
+                  type: BARCHART
+                  refresh:
+                    interval: "3"
+                  columns:
+                    - id: Total
+                      pattern: "#"
+                  chart:
+                    width: "300"
+                    height: "200"
+                    margin:
+                      left: "20"
+                  dataSetLookup:
+                    dataSetUuid: completed_workflows
+                    groupOps:
+                      - columnGroup:
+                          source: Workflow Name
+                        groupFunctions:
+                          - source: Workflow Name
+                          - source: Total
+                            function: MAX
+          - span: "3"
+            layoutComponents:
+              - type: HTML
+                properties:
+                  HTML_CODE: <strong>Total Duration</strong><hr />
+                  font-size: medium
+              - settings:
+                  type: BARCHART
+                  refresh:
+                    interval: "3"
+                  columns:
+                    - id: Duration
+                      pattern: "#0.000"
+                  chart:
+                    width: "300"
+                    height: "200"
+                    margin:
+                      left: "20"
+                  dataSetLookup:
+                    dataSetUuid: workflow_duration
+                    groupOps:
+                      - columnGroup:
+                          source: Workflow Name
+                        groupFunctions:
+                          - source: Workflow Name
+                          - source: Duration
+
+      - layoutColumns:
+          - layoutComponents:
+              - type: HTML
+                properties:
+                  HTML_CODE: <br /> Activity <hr />
+                  font-size: x-large
+      - layoutColumns:
+          - span: "4"
+            layoutComponents:
+              - settings:
+                  type: EXTERNAL_COMPONENT
+                  external_component_id: timeseries
+                  timeseries:
+                    title:
+                      text: "Started"
+                  external:
+                    external_component_width: 700px
+                    external_component_height: 300px
+                  refresh:
+                    interval: "2"
+                  dataSetLookup:
+                    dataSetUuid: started_workflows
+                    groupOps:
+                      - groupFunctions:
+                          - source: Workflow Name
+                          - source: Time
+                          - source: Total
+          - span: "4"
+            layoutComponents:
+              - settings:
+                  type: EXTERNAL_COMPONENT
+                  external_component_id: timeseries
+                  timeseries:
+                    title:
+                      text: "Completed"
+                  external:
+                    external_component_width: 700px
+                    external_component_height: 300px
+                  refresh:
+                    interval: "2"
+                  dataSetLookup:
+                    dataSetUuid: completed_workflows
+                    groupOps:
+                      - groupFunctions:
+                          - source: Workflow Name
+                          - source: Time
+                          - source: Total
