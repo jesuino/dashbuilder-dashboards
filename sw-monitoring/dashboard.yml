@@ -1,3 +1,21 @@
+navTree:
+  root_items:
+  - id: sw_nav_group
+    type: GROUP
+    name: Serveless Workflow
+    children:
+    - id: sw_nav
+      type: ITEM
+      name: Serverless Workflows
+      context: resourceId=Serverless Workflows;resourceType=PERSPECTIVE;
+    - id: memory_nav
+      type: ITEM
+      name: JVM Memory Usage
+      context: resourceId=JVM Memory Usage;resourceType=PERSPECTIVE;
+    - id: threads_nav
+      type: ITEM
+      name: Threads
+      context: resourceId=Threads;resourceType=PERSPECTIVE;
 datasets:
   - uuid: jvm_used_memory
     expression: '$reduce($map($.data.result, function($v) {$map($v.values, function($r, $i) {[$v.metric.instance, $v.metric.id, $r[0] * 1000, $r[1]]})}), $append)'
@@ -44,13 +62,15 @@ datasets:
           type: NUMBER    
 layoutTemplates:
   - name: JVM Memory Usage
+    properties:
+      margin-left: '10px'
     rows:
       - layoutColumns:
           - layoutComponents:
               - type: HTML
                 properties:
-                    HTML_CODE: <br /> <strong>JVM Memory Usage</strong><hr />
-                    font-size: large
+                  HTML_CODE: JVM Memory Usage <hr />
+                  font-size: xx-large
           - layoutComponents:
               - settings:
                   type: EXTERNAL_COMPONENT
@@ -71,6 +91,8 @@ layoutTemplates:
                           - source: Column 2
                           - source: Column 3
   - name: Threads
+    properties:
+      margin-left: '10px'  
     rows:
       - layoutColumns:
           - span: '2'
@@ -305,3 +327,16 @@ layoutTemplates:
                           - source: Workflow Name
                           - source: Time
                           - source: Total
+  - name: index
+    rows:
+        - layoutColumns:
+          - layoutComponents:
+            - type: org.dashbuilder.client.navigation.layout.editor.NavTabListDragComponent
+              properties:
+                targetDivId: sw_tabs_div
+                navGroupId: sw_nav_group
+
+            - type: org.uberfire.ext.plugin.client.perspective.editor.layout.editor.TargetDivDragComponent
+              properties:
+                width: '100%'
+                ID_PARAMETER: sw_tabs_div
