@@ -271,6 +271,9 @@ layoutTemplates:
                       pattern: '#'
                   dataSetLookup:
                     dataSetUuid: processInstances
+                    sortOps:
+                       - column: startDate
+                         sortOrder: ASCENDING
                     groupOps:
                       - columnGroup:
                           source: startDate
