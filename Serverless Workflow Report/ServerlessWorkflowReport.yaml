@@ -1,0 +1,354 @@
+datasets:
+  - uuid: processInstances
+    expression: >-
+                $.data.ProcessInstances.[ id, processId, processName, serviceUrl, state, start, lastUpdate, end ? $toMillis(end) - $toMillis(start) : -1, error ? error.message : ""]
+    url: https://data-index-secure-dashbuilder.kie-tooling-0ad6762cc85bcef5745bb684498c2436-0000.us-south.containers.appdomain.cloud/graphql/?query=%7B%0A%20%20ProcessInstances%20%7B%0A%20%20%20%20id%0A%20%20%20%20processId%0A%20%20%20%20processName%0A%20%20%20%20serviceUrl%0A%20%20%20%20state%0A%20%20%20%20start%0A%20%20%20%20end%0A%20%20%20%20lastUpdate%0A%20%20%20%20error%20%7B%20%20%20%20%20%20%0A%20%20%20%20%20%20message%0A%20%20%20%20%7D%0A%20%20%7D%0A%7D%0A
+    cacheEnabled: 'true'
+    columns:
+        - id: id
+          type: LABEL
+        - id: processId
+          type: LABEL
+        - id: processName
+          type: LABEL
+        - id: serviceUrl
+          type: LABEL
+        - id: state
+          type: LABEL
+        - id: startDate
+          type: DATE
+        - id: lastUpdate
+          type: DATE
+        - id: duration
+          type: number
+        - id: errorMessage
+          type: LABEL
+layoutTemplates:
+  - name: Workflows Summary
+    properties:
+        background-color: '#EFEFDF'
+    rows:
+      - layoutColumns:
+          - layoutComponents:
+              - type: HTML
+                properties:
+                    HTML_CODE: 'Serverless Workflow Summary <hr />'
+                    font-size: x-large
+      - layoutColumns:
+          - span: '2'
+            layoutComponents:
+              - settings:
+                  type: METRIC
+                  filter: 
+                    enabled: 'true'
+                    listening: 'true'
+                  general:
+                    title: Total Workflows
+                    visible: 'true'
+                  chart:
+                    width: '150'
+                    height: '90'
+                  refresh:
+                    interval: '30'
+                  columns:
+                    - id: Total
+                      pattern: '#'
+                  dataSetLookup:
+                    dataSetUuid: processInstances
+                    groupOps:
+                      - groupFunctions:
+                          - source: Total
+                            function: COUNT
+          - span: '2'
+            properties:
+                color: blue
+            layoutComponents:
+              - settings:
+                  type: METRIC
+                  filter: 
+                    enabled: 'true'
+                    listening: 'true'
+                  general:
+                    title: Completed
+                    visible: 'true'
+                  chart:
+                    width: '150'
+                    height: '90'
+                  refresh:
+                    interval: '30'
+                  columns:
+                    - id: Total
+                      pattern: '#'
+                  dataSetLookup:
+                    dataSetUuid: processInstances
+                    filterOps:
+                        - column: state
+                          function: EQUALS_TO
+                          args:
+                            - COMPLETED
+                    groupOps:
+                      - groupFunctions:
+                          - source: Total
+                            function: COUNT
+          - span: '2'
+            properties:
+                color: green
+            layoutComponents:
+              - settings:
+                  type: METRIC
+                  filter: 
+                    enabled: 'true'
+                    listening: 'true'
+                  general:
+                    title: Active
+                    visible: 'true'
+                  chart:
+                    width: '150'
+                    height: '90'
+                  refresh:
+                    interval: '30'
+                  columns:
+                    - id: Total
+                      pattern: '#'
+                  dataSetLookup:
+                    dataSetUuid: processInstances
+                    filterOps:
+                        - column: state
+                          function: EQUALS_TO
+                          args:
+                            - ACTIVE
+                    groupOps:
+                      - groupFunctions:
+                          - source: Total
+                            function: COUNT
+          - span: '2'
+            properties:
+                color: orange
+            layoutComponents:
+              - settings:
+                  type: METRIC
+                  filter: 
+                    enabled: 'true'
+                    listening: 'true'
+                  general:
+                    title: Pending
+                    visible: 'true'
+                  chart:
+                    width: '150'
+                    height: '90'
+                  refresh:
+                    interval: '30'
+                  columns:
+                    - id: Total
+                      pattern: '#'
+                  dataSetLookup:
+                    dataSetUuid: processInstances
+                    filterOps:
+                        - column: state
+                          function: EQUALS_TO
+                          args:
+                            - PENDING
+                    groupOps:
+                      - groupFunctions:
+                          - source: Total
+                            function: COUNT
+          - span: '2'
+            properties:
+                color: orange
+            layoutComponents:
+              - settings:
+                  type: METRIC
+                  filter: 
+                    enabled: 'true'
+                    listening: 'true'
+                  general:
+                    title: Aborted
+                    visible: 'true'
+                  chart:
+                    width: '150'
+                    height: '90'
+                  refresh:
+                    interval: '30'
+                  columns:
+                    - id: Total
+                      pattern: '#'
+                  dataSetLookup:
+                    dataSetUuid: processInstances
+                    filterOps:
+                        - column: state
+                          function: EQUALS_TO
+                          args:
+                            - ABORTED
+                    groupOps:
+                      - groupFunctions:
+                          - source: Total
+                            function: COUNT
+          - span: '2'
+            properties:
+                color: red
+            layoutComponents:
+              - settings:
+                  type: METRIC
+                  filter: 
+                    enabled: 'true'
+                    listening: 'true'
+                  general:
+                    title: Error
+                    visible: 'true'
+                  chart:
+                    width: '150'
+                    height: '90'
+                  refresh:
+                    interval: '30'
+                  columns:
+                    - id: Total
+                      pattern: '#'
+                  dataSetLookup:
+                    dataSetUuid: processInstances
+                    filterOps:
+                        - column: state
+                          function: EQUALS_TO
+                          args:
+                            - ERROR
+                    groupOps:
+                      - groupFunctions:
+                          - source: Total
+                            function: COUNT
+      - layoutColumns:
+            - layoutComponents:
+              - type: HTML
+                properties:
+                    HTML_CODE: '<hr />'
+      - layoutColumns:
+          - span: '4'
+            properties:
+                background-color: white
+            layoutComponents:
+              - type: HTML
+                properties:
+                    HTML_CODE: '<strong>Total by Workflow</strong>'
+                    font-size: Medium
+              - settings:
+                  type: BARCHART
+                  filter: 
+                    enabled: 'true'
+                    listening: 'true'
+                  chart:
+                    width: '300'
+                    height: '200'
+                  columns:
+                    - id: Total
+                      pattern: '#'
+                  dataSetLookup:
+                    dataSetUuid: processInstances
+                    groupOps:
+                      - columnGroup:
+                          source: processId
+                        groupFunctions:
+                          - source: processId
+                          - source: processId
+                            function: COUNT
+                            column: Total
+          - span: '4'
+            properties:
+                background-color: white
+            layoutComponents:
+              - type: HTML
+                properties:
+                    HTML_CODE: '<strong>Workflows by Start Date</strong>'
+                    font-size: Medium
+              - settings:
+                  type: AREACHART
+                  filter: 
+                    enabled: 'true'
+                    listening: 'true'
+                  chart:
+                    width: '300'
+                    height: '200'
+                  columns:
+                    - id: Total Started
+                      pattern: '#'
+                  dataSetLookup:
+                    dataSetUuid: processInstances
+                    groupOps:
+                      - columnGroup:
+                          source: startDate
+                        groupFunctions:
+                          - source: startDate
+                          - source: startDate
+                            function: COUNT
+                            column: Total Started
+          - span: '4'
+            properties:
+                background-color: white
+            layoutComponents:
+              - type: HTML
+                properties:
+                    HTML_CODE: '<strong>Average Duration</strong>'
+                    font-size: Medium
+              - settings:
+                  type: BARCHART
+                  filter: 
+                    enabled: 'true'
+                    listening: 'true'
+                  chart:
+                    width: '300'
+                    height: '200'
+                  dataSetLookup:
+                    dataSetUuid: processInstances
+                    groupOps:
+                      - columnGroup:
+                          source: processId
+                        groupFunctions:
+                          - source: processId
+                          - source: duration
+                            function: AVERAGE
+                            column: Total
+      - layoutColumns:
+          - span: '12'
+            layoutComponents:
+            - properties:
+                width: '150px'
+                margin-top: '20px'
+                float: 'right'
+              settings:
+                  type: SELECTOR
+                  subType: SELECTOR_DROPDOWN
+                  general:
+                    visible: 'true'
+                    text: 'Filter'
+                  filter: 
+                    enabled: 'true'
+                    notification: 'true'
+                  dataSetLookup:
+                    dataSetUuid: processInstances
+                    groupOps:
+                      - columnGroup:
+                          source: processId
+                        groupFunctions:
+                          - source: processId
+                            column: Workflow
+          - layoutComponents:
+              - type: HTML
+                properties:
+                    HTML_CODE: '<hr />Workflows List'
+                    font-size: x-large
+                    margin-bottom: 20px
+      - layoutColumns:
+          - layoutComponents:
+              - settings:
+                  type: EXTERNAL_COMPONENT
+                  external_component_id: 'filtered-table'
+                  external:
+                    external_component_width: '100%'
+                    external_component_height: '400px'
+                  filtered-table:
+                    alertColumn: '4'
+                    alertDanger: 'ERROR'
+                    alertGreat: 'COMPLETED'
+                    alertGood: 'ACTIVE'
+                  dataSetLookup:
+                    dataSetUuid: processInstances
+                    groupOps:
+                        groupFunctions:
+                          - source: processId
