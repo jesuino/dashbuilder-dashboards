@@ -49,8 +49,6 @@ layoutTemplates:
                   chart:
                     width: '150'
                     height: '90'
-                  refresh:
-                    interval: '30'
                   columns:
                     - id: Total
                       pattern: '#'
@@ -75,8 +73,6 @@ layoutTemplates:
                   chart:
                     width: '150'
                     height: '90'
-                  refresh:
-                    interval: '30'
                   columns:
                     - id: Total
                       pattern: '#'
@@ -106,8 +102,6 @@ layoutTemplates:
                   chart:
                     width: '150'
                     height: '90'
-                  refresh:
-                    interval: '30'
                   columns:
                     - id: Total
                       pattern: '#'
@@ -137,8 +131,6 @@ layoutTemplates:
                   chart:
                     width: '150'
                     height: '90'
-                  refresh:
-                    interval: '30'
                   columns:
                     - id: Total
                       pattern: '#'
@@ -168,8 +160,6 @@ layoutTemplates:
                   chart:
                     width: '150'
                     height: '90'
-                  refresh:
-                    interval: '30'
                   columns:
                     - id: Total
                       pattern: '#'
@@ -199,8 +189,6 @@ layoutTemplates:
                   chart:
                     width: '150'
                     height: '90'
-                  refresh:
-                    interval: '30'
                   columns:
                     - id: Total
                       pattern: '#'
