@@ -1,7 +1,7 @@
 datasets:
   - uuid: processInstances
     expression: >-
-                $.data.ProcessInstances.[ id, processId, processName, serviceUrl, state, start, lastUpdate, end ? $toMillis(end) - $toMillis(start) : -1, error ? error.message : ""]
+                $.data.ProcessInstances.[ id, processId, processName, serviceUrl, state, $fromMillis($toMillis(start)), $fromMillis($toMillis(lastUpdate)), end ? $toMillis(end) - $toMillis(start) : -1, error ? error.message : ""]
     url: https://data-index-secure-dashbuilder.kie-tooling-0ad6762cc85bcef5745bb684498c2436-0000.us-south.containers.appdomain.cloud/graphql/?query=%7B%0A%20%20ProcessInstances%20%7B%0A%20%20%20%20id%0A%20%20%20%20processId%0A%20%20%20%20processName%0A%20%20%20%20serviceUrl%0A%20%20%20%20state%0A%20%20%20%20start%0A%20%20%20%20end%0A%20%20%20%20lastUpdate%0A%20%20%20%20error%20%7B%20%20%20%20%20%20%0A%20%20%20%20%20%20message%0A%20%20%20%20%7D%0A%20%20%7D%0A%7D%0A
     cacheEnabled: 'true'
     refreshTime: '30minute'
