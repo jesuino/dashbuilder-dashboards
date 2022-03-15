@@ -264,6 +264,7 @@ layoutTemplates:
                          sortOrder: ASCENDING
                     groupOps:
                       - columnGroup:
+                          emptyIntervals: 'true'
                           source: startDate
                         groupFunctions:
                           - source: startDate
