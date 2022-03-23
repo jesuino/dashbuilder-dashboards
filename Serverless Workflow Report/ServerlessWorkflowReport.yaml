@@ -27,7 +27,7 @@ datasets:
 layoutTemplates:
   - name: Workflows Summary
     properties:
-        background-color: '#EFEFDF'
+        background-color: 'white'
     rows:
       - layoutColumns:
           - layoutComponents:
