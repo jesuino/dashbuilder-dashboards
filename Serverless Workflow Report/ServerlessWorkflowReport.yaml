@@ -219,12 +219,18 @@ layoutTemplates:
                     font-size: Medium
               - settings:
                   type: BARCHART
+                  axis:
+                    y:
+                        labels_show: 'false'
                   filter: 
                     enabled: 'true'
                     listening: 'true'
                   chart:
                     width: '300'
                     height: '200'
+                    grid:
+                        x: 'false'
+                        y: 'false'
                   columns:
                     - id: Total
                       pattern: '#'
@@ -248,12 +254,18 @@ layoutTemplates:
                     font-size: Medium
               - settings:
                   type: AREACHART
+                  axis:
+                    y:
+                        labels_show: 'false'
                   filter: 
                     enabled: 'true'
                     listening: 'true'
                   chart:
                     width: '300'
                     height: '200'
+                    grid:
+                        x: 'false'
+                        y: 'false'
                   columns:
                     - id: Total Started
                       pattern: '#'
@@ -281,12 +293,18 @@ layoutTemplates:
                     font-size: Medium
               - settings:
                   type: BARCHART
+                  axis:
+                    y:
+                        labels_show: 'false'
                   filter: 
                     enabled: 'true'
                     listening: 'true'
                   chart:
                     width: '300'
                     height: '200'
+                    grid:
+                        x: 'false'
+                        y: 'false'
                   dataSetLookup:
                     dataSetUuid: processInstances
                     groupOps:
