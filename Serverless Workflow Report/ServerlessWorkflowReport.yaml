@@ -24,20 +24,19 @@ datasets:
           type: number
         - id: errorMessage
           type: LABEL
-layoutTemplates:
+pages:
   - name: Workflows Summary
     properties:
         background-color: 'white'
     rows:
-      - layoutColumns:
-          - layoutComponents:
-              - type: HTML
+      - columns:
+          - components:
+              - html: 'Serverless Workflow Summary <hr />'
                 properties:
-                    HTML_CODE: 'Serverless Workflow Summary <hr />'
                     font-size: x-large
-      - layoutColumns:
+      - columns:
           - span: '2'
-            layoutComponents:
+            components:
               - settings:
                   type: METRIC
                   filter: 
@@ -53,15 +52,15 @@ layoutTemplates:
                     - id: Total
                       pattern: '#'
                   dataSetLookup:
-                    dataSetUuid: processInstances
-                    groupOps:
+                    uuid: processInstances
+                    group:
                       - groupFunctions:
                           - source: Total
                             function: COUNT
           - span: '2'
             properties:
                 color: blue
-            layoutComponents:
+            components:
               - settings:
                   type: METRIC
                   filter: 
@@ -77,20 +76,20 @@ layoutTemplates:
                     - id: Total
                       pattern: '#'
                   dataSetLookup:
-                    dataSetUuid: processInstances
-                    filterOps:
+                    uuid: processInstances
+                    filter:
                         - column: state
                           function: EQUALS_TO
                           args:
                             - COMPLETED
-                    groupOps:
+                    group:
                       - groupFunctions:
                           - source: Total
                             function: COUNT
           - span: '2'
             properties:
                 color: green
-            layoutComponents:
+            components:
               - settings:
                   type: METRIC
                   filter: 
@@ -106,20 +105,20 @@ layoutTemplates:
                     - id: Total
                       pattern: '#'
                   dataSetLookup:
-                    dataSetUuid: processInstances
-                    filterOps:
+                    uuid: processInstances
+                    filter:
                         - column: state
                           function: EQUALS_TO
                           args:
                             - ACTIVE
-                    groupOps:
+                    group:
                       - groupFunctions:
                           - source: Total
                             function: COUNT
           - span: '2'
             properties:
                 color: orange
-            layoutComponents:
+            components:
               - settings:
                   type: METRIC
                   filter: 
@@ -135,20 +134,20 @@ layoutTemplates:
                     - id: Total
                       pattern: '#'
                   dataSetLookup:
-                    dataSetUuid: processInstances
-                    filterOps:
+                    uuid: processInstances
+                    filter:
                         - column: state
                           function: EQUALS_TO
                           args:
                             - PENDING
-                    groupOps:
+                    group:
                       - groupFunctions:
                           - source: Total
                             function: COUNT
           - span: '2'
             properties:
                 color: orange
-            layoutComponents:
+            components:
               - settings:
                   type: METRIC
                   filter: 
@@ -164,20 +163,20 @@ layoutTemplates:
                     - id: Total
                       pattern: '#'
                   dataSetLookup:
-                    dataSetUuid: processInstances
-                    filterOps:
+                    uuid: processInstances
+                    filter:
                         - column: state
                           function: EQUALS_TO
                           args:
                             - ABORTED
-                    groupOps:
+                    group:
                       - groupFunctions:
                           - source: Total
                             function: COUNT
           - span: '2'
             properties:
                 color: red
-            layoutComponents:
+            components:
               - settings:
                   type: METRIC
                   filter: 
@@ -194,28 +193,25 @@ layoutTemplates:
                       pattern: '#'
                   dataSetLookup:
                     dataSetUuid: processInstances
-                    filterOps:
+                    filter:
                         - column: state
                           function: EQUALS_TO
                           args:
                             - ERROR
-                    groupOps:
+                    group:
                       - groupFunctions:
                           - source: Total
                             function: COUNT
-      - layoutColumns:
-            - layoutComponents:
-              - type: HTML
-                properties:
-                    HTML_CODE: '<hr />'
-      - layoutColumns:
+      - columns:
+            - components:
+              - html: '<hr />'
+      - columns:
           - span: '4'
             properties:
                 background-color: white
-            layoutComponents:
-              - type: HTML
+            components:
+              - html: '<strong>Total by Workflow</strong>'
                 properties:
-                    HTML_CODE: '<strong>Total by Workflow</strong>'
                     font-size: Medium
               - settings:
                   type: BARCHART
@@ -226,7 +222,7 @@ layoutTemplates:
                     enabled: 'true'
                     listening: 'true'
                   chart:
-                    width: '300'
+                    width: '450'
                     height: '200'
                     grid:
                         x: 'false'
@@ -236,7 +232,7 @@ layoutTemplates:
                       pattern: '#'
                   dataSetLookup:
                     dataSetUuid: processInstances
-                    groupOps:
+                    group:
                       - columnGroup:
                           source: processId
                         groupFunctions:
@@ -248,9 +244,8 @@ layoutTemplates:
             properties:
                 background-color: white
             layoutComponents:
-              - type: HTML
+              - html: '<strong>Workflows by Start Date</strong>'
                 properties:
-                    HTML_CODE: '<strong>Workflows by Start Date</strong>'
                     font-size: Medium
               - settings:
                   type: AREACHART
@@ -261,7 +256,7 @@ layoutTemplates:
                     enabled: 'true'
                     listening: 'true'
                   chart:
-                    width: '300'
+                    width: '450'
                     height: '200'
                     grid:
                         x: 'false'
@@ -270,11 +265,11 @@ layoutTemplates:
                     - id: Total Started
                       pattern: '#'
                   dataSetLookup:
-                    dataSetUuid: processInstances
-                    sortOps:
+                    uuid: processInstances
+                    sort:
                        - column: startDate
                          sortOrder: ASCENDING
-                    groupOps:
+                    group:
                       - columnGroup:
                           emptyIntervals: 'true'
                           source: startDate
@@ -287,9 +282,8 @@ layoutTemplates:
             properties:
                 background-color: white
             layoutComponents:
-              - type: HTML
+              - html: '<strong>Average Duration</strong>'
                 properties:
-                    HTML_CODE: '<strong>Average Duration</strong>'
                     font-size: Medium
               - settings:
                   type: BARCHART
@@ -300,14 +294,14 @@ layoutTemplates:
                     enabled: 'true'
                     listening: 'true'
                   chart:
-                    width: '300'
+                    width: '450'
                     height: '200'
                     grid:
                         x: 'false'
                         y: 'false'
                   dataSetLookup:
-                    dataSetUuid: processInstances
-                    groupOps:
+                    uuid: processInstances
+                    group:
                       - columnGroup:
                           source: processId
                         groupFunctions:
@@ -315,16 +309,15 @@ layoutTemplates:
                           - source: duration
                             function: AVERAGE
                             column: Total
-      - layoutColumns:
+      - columns:
           - span: '12'
-            layoutComponents:
+            components:
             - properties:
                 width: '150px'
                 margin-top: '20px'
                 float: 'right'
               settings:
                   type: SELECTOR
-                  subType: SELECTOR_DROPDOWN
                   general:
                     visible: 'true'
                     text: 'Filter'
@@ -332,21 +325,20 @@ layoutTemplates:
                     enabled: 'true'
                     notification: 'true'
                   dataSetLookup:
-                    dataSetUuid: processInstances
-                    groupOps:
+                    uuid: processInstances
+                    group:
                       - columnGroup:
                           source: processId
                         groupFunctions:
                           - source: processId
                             column: Workflow
           - layoutComponents:
-              - type: HTML
+              - html: '<hr />Workflows List'
                 properties:
-                    HTML_CODE: '<hr />Workflows List'
                     font-size: x-large
                     margin-bottom: 20px
-      - layoutColumns:
-          - layoutComponents:
+      - columns:
+          - components:
               - settings:
                   type: EXTERNAL_COMPONENT
                   external_component_id: 'filtered-table'
@@ -359,7 +351,7 @@ layoutTemplates:
                     alertGreat: 'COMPLETED'
                     alertGood: 'ACTIVE'
                   dataSetLookup:
-                    dataSetUuid: processInstances
-                    groupOps:
+                    uuid: processInstances
+                    group:
                         groupFunctions:
                           - source: processId
